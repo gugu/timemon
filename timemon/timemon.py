@@ -25,7 +25,7 @@ def write_stderr(s):
 
 def timemon_from_args(arguments):
     import getopt
-    short_args = "hg:i:n:s"
+    short_args = "hg:i:n:s:"
     long_args = [
         "help",
         "group=",
@@ -85,11 +85,13 @@ def start_timemon(group, interval, number, sleep=0):
                     except Exception as e:
                         write_stderr(str(e) + "\n")
                     if sleep:
-                        time.sleep(float(sleep))
+                        time.sleep(float(sleep)/2)
                     try:
                         rpc.supervisor.startProcess(':'.join([process['group'], process['name']]), True)
                     except Exception as e:
                         write_stderr(str(e) + "\n")
+                    if sleep:
+                        time.sleep(float(sleep)/2)
         write_stdout("RESULT 2\nOK")
 
 
